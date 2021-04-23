@@ -38,14 +38,14 @@ const _ServiceMetrics = (props: ServicesMetricsProps) => {
 	}, [props.globalTime, servicename]);
 
 	const onTracePopupClick = (timestamp: number) => {
-		const tMin = timestamp / 1000000;
 		const currentTime = timestamp / 1000000;
+		const tPlusOne = timestamp / 1000000 + 1 * 60 * 1000;
 
-		props.updateTimeInterval("custom", [tMin, currentTime]); // updateTimeInterval takes second range in ms -- give -5 min to selected time,
+		props.updateTimeInterval("custom", [currentTime, tPlusOne]); // updateTimeInterval takes second range in ms -- give -5 min to selected time,
 
 		const urlParams = new URLSearchParams();
-		urlParams.set(METRICS_PAGE_QUERY_PARAM.startTime, tMin.toString());
-		urlParams.set(METRICS_PAGE_QUERY_PARAM.endTime, currentTime.toString());
+		urlParams.set(METRICS_PAGE_QUERY_PARAM.startTime, currentTime.toString());
+		urlParams.set(METRICS_PAGE_QUERY_PARAM.endTime, tPlusOne.toString());
 		if (servicename) {
 			urlParams.set(METRICS_PAGE_QUERY_PARAM.service, servicename);
 		}
